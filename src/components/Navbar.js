@@ -105,6 +105,16 @@ const Navbar = (props) => {
                     My Profile
                   </NavLink>
                 </li>
+                <li className="nav-item">
+                  <NavLink
+                    activeClassName="active"
+                    className="nav-link"
+                    title="Make a new Post"
+                    to="/blog/new"
+                  >
+                    New Post
+                  </NavLink>
+                </li>
               </ul>
               <ul className="navbar-nav ml-auto">
                 <li className="nav-item">
