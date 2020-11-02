@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useLoading, Oval } from "@agney/react-loading";
-import { viewBlog, addComment } from "../scripts/api-calls";
+import { viewBlog } from "../scripts/api-calls";
 import PostCard from "../templates/PostCard";
 import CommentCard from "../templates/CommentCard";
 import Error from "../templates/Error";
@@ -26,8 +26,6 @@ const BlogPost = () => {
 
   const [post, setPost] = useState({});
   const [comments, setComments] = useState([]);
-  const [commentTitle, setCommentTitle] = useState("");
-  const [commentContent, setCommentContent] = useState("");
   useEffect(() => {
     const fetchPost = async () => {
       try {
@@ -48,44 +46,7 @@ const BlogPost = () => {
       }
     };
     fetchPost();
-  }, [id, token, commentTitle, setCommentTitle]);
-
-  const handleEditorChange = (content, editor) => {
-    setCommentContent(content);
-  };
-
-  const handleClick = (e) => {
-    e.preventDefault();
-    if (commentTitle.trim().length === 0) {
-      seterror("Comment title can't be empty");
-      return;
-    } else if (commentContent.trim().length === 0) {
-      seterror("Comment content can't be empty.");
-      return;
-    } else {
-      setPosting(true);
-      newComment();
-    }
-  };
-
-  const [posting, setPosting] = useState(false);
-  const newComment = async () => {
-    try {
-      const data = await addComment(
-        id,
-        { title: commentTitle, content: commentContent },
-        token
-      );
-      setPosting(false);
-      if (!data.error) {
-        setCommentTitle("");
-        setCommentContent("");
-      }
-    } catch (error) {
-      setPosting(false);
-      console.error(error);
-    }
-  };
+  }, [id, token]);
 
   return (
     <div>
