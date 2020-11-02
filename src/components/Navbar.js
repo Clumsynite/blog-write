@@ -97,17 +97,6 @@ const Navbar = (props) => {
               <ul className="navbar-nav">
                 <li className="nav-item">
                   <NavLink
-                    className="nav-link"
-                    activeClassName="active"
-                    to="/blogs"
-                  >
-                    Blogs
-                  </NavLink>
-                </li>
-              </ul>
-              <ul className="navbar-nav ml-auto">
-                <li className="nav-item">
-                  <NavLink
                     activeClassName="active"
                     className="nav-link"
                     title={`${props.user.firstname} ${props.user.lastname}`}
@@ -116,6 +105,8 @@ const Navbar = (props) => {
                     My Profile
                   </NavLink>
                 </li>
+              </ul>
+              <ul className="navbar-nav ml-auto">
                 <li className="nav-item">
                   <div
                     className="nav-link"
