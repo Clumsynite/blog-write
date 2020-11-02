@@ -38,7 +38,7 @@ const Login = (props) => {
         props.setAuth(true);
         props.setUser(user);
         document.cookie = "login=true";
-        history.push("/blogs");
+        history.push("/profile");
       } catch (error) {
         setloading(false);
         setError(error);
