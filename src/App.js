@@ -10,6 +10,7 @@ import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
+import Profile from "./components/Profile";
 import Footer from "./components/Footer";
 import AuthenticatedRoute from "./routes/AuthenticatedRoute";
 import UnauthenticatedRoute from "./routes/UnauthenticatedRoute";
@@ -69,11 +70,13 @@ const App = () => {
           <Switch>
             <Route exact path="/" component={Home} />
             <UnauthenticatedRoute
+              exact
               path="/login"
               component={Login}
               appProps={{ setAuth: setauthenticated, setUser: setuser }}
             />
-            <UnauthenticatedRoute path="/signup" component={Signup} />
+            <UnauthenticatedRoute exact path="/signup" component={Signup} />
+            <AuthenticatedRoute exact path="/profile" component={Profile} />
             <Redirect to="/" />
           </Switch>
         </div>
