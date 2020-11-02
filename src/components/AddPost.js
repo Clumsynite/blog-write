@@ -1,15 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { Editor } from "@tinymce/tinymce-react";
-import { Markup } from "interweave";
 import PostCard from "../templates/PostCard";
+
 const AddPost = () => {
   const [title, settitle] = useState("");
   const [content, setcontent] = useState("");
+  const [time, setTime] = useState(new Date());
+  useEffect(() => {
+    setInterval(() => {
+      setTime(new Date());
+    }, 1000);
+    return time;
+  }, [time, setTime]);
+
+  const [draft, setdraft] = useState(false);
   const user = JSON.parse(localStorage.getItem("user"));
   return (
     <div className="AddPost">
       <div className="Preview">
-        <PostCard post={{ title, content, added: new Date(), author: user }} />
+        <PostCard post={{ title, content, added: time, author: user }} />
       </div>
       <div className="Edit">
         <div className="mb-4 shadow">
