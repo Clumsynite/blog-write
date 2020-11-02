@@ -12,15 +12,16 @@ const Home = () => {
           on sleep if there's no activity in 1 hour.
         </div>
         <div className="mt-2">
-          This site is meant for reading Blog posts and commenting on those
-          posts. If you want to post yourself you'll have to go to
+          This site is meant for making new Blog Posts and editing your posts
+          and comments. If you want to read blog posts by other people you'll
+          have to go to
           <code>
             <a
-              href="https://clumsynite.github.io/blog-write"
+              href="https://clumsynite.github.io/blog-read"
               className="link mx-1"
-              title="Site meant for posting yourself"
+              title="Site meant for reading Blog Posts"
             >
-              Blog Write
+              Blog Read
             </a>
           </code>
           .
@@ -30,7 +31,7 @@ const Home = () => {
             Login
           </Link>
           if you haven't logged in yet. You need to have an account if you want
-          to read posts.
+          to make new posts.
         </div>
         <div className="mt-2">
           <Link className="link mr-2" to="/signup">
