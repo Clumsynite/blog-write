@@ -1,0 +1,29 @@
+.Footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  color: white;
+  padding: 16px;
+  font-size: 18px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.link {
+  margin: 0 4px;
+  color: cyan;
+}
+
+.link:hover {
+  text-decoration: none;
+  color: #00ffbf;
+}
+
+.heart {
+  color: #ff4d4d;
+  margin: 0 3px;
+}
