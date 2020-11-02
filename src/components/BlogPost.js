@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useLoading, Oval, TailSpin } from "@agney/react-loading";
-import { Editor } from "@tinymce/tinymce-react";
-import { Markup } from "interweave";
+import { useLoading, Oval } from "@agney/react-loading";
 import { viewBlog, addComment } from "../scripts/api-calls";
-import { getRelativeTime, getFullname } from "../scripts/helper";
+import PostCard from "../templates/PostCard";
 import CommentCard from "../templates/CommentCard";
 import Error from "../templates/Error";
 
@@ -96,30 +94,7 @@ const BlogPost = () => {
           {indicatorEl}
         </div>
       )}
-      {post.title && !loading && (
-        <div className="card shadow rounded mb-5">
-          <div className="card-body">
-            <h1 className="card-title text-center">{post.title}</h1>
-            <div className="card-subtitle my-3 text-muted d-flex justify-content-between flex-wrap">
-              <div className="d-flex align-items-center">
-                <i className="material-icons mr-1">account_circle</i>
-                {getFullname(post.author)}
-                <strong>
-                  <span className="badge badge-pill badge-dark mx-1">AKA</span>
-                </strong>
-                {post.author.username}
-              </div>
-              <div className="d-flex align-items-center">
-                <i className="material-icons mr-1">access_time</i>
-                {getRelativeTime(post.added)}
-              </div>
-            </div>
-            <div className="card-text">
-              <Markup content={post.content} />
-            </div>
-          </div>
-        </div>
-      )}
+      {post.title && !loading && <PostCard post={post} />}
       {error.length > 0 > 0 && (
         <div className="w-75 mx-auto">
           <Error error={error} />
