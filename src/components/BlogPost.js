@@ -125,50 +125,6 @@ const BlogPost = () => {
           <Error error={error} />
         </div>
       )}
-      {post.title && (
-        <div className="mb-4 shadow">
-          <input
-            type="text"
-            placeholder="Enter Comment Title"
-            maxLength="40"
-            onChange={(e) => {
-              setCommentTitle(e.target.value);
-            }}
-            value={commentTitle}
-            className="form-control"
-          />
-          <Editor
-            apiKey="iegn84mumhivsy1it2lvc8qjfxkaav0snoxsx4u66dxlnz3g"
-            initialValue="<p>Enter you comment here</p>"
-            init={{
-              height: 160,
-              menubar: false,
-              plugins: [
-                "advlist autolink lists link image charmap print preview anchor",
-                "searchreplace visualblocks code fullscreen",
-                "insertdatetime media table paste code help wordcount",
-              ],
-              toolbar:
-                "undo redo | formatselect | bold italic backcolor | " +
-                "alignleft aligncenter alignright alignjustify | " +
-                "bullist numlist outdent indent | removeformat | help",
-              placeholder: "Enter you comment here",
-            }}
-            onEditorChange={handleEditorChange}
-            value={commentContent}
-          />
-          <button
-            className={`btn btn-block ${
-              posting ? "btn-secondary" : "btn-outline-secondary"
-            }`}
-            onClick={handleClick}
-            disabled={posting}
-          >
-            {!posting && "Post your Comment"}
-            {posting && <TailSpin width="20" />}
-          </button>
-        </div>
-      )}
       {comments.length > 0 &&
         comments.map((comment, index) => {
           return <CommentCard comment={comment} key={index} />;
