@@ -8,7 +8,11 @@ import {
 import Particles from "./components/Particles";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
+import Login from "./components/Login";
+import Signup from "./components/Signup";
 import Footer from "./components/Footer";
+import AuthenticatedRoute from "./routes/AuthenticatedRoute";
+import UnauthenticatedRoute from "./routes/UnauthenticatedRoute";
 import { ping, userLogout } from "./scripts/api-calls";
 
 const App = () => {
@@ -64,6 +68,13 @@ const App = () => {
         <div className="container mt-3">
           <Switch>
             <Route exact path="/" component={Home} />
+            <UnauthenticatedRoute
+              path="/login"
+              component={Login}
+              appProps={{ setAuth: setauthenticated, setUser: setuser }}
+            />
+            <UnauthenticatedRoute path="/signup" component={Signup} />
+            <Redirect to="/" />
           </Switch>
         </div>
       </Router>
