@@ -34,7 +34,7 @@ const Login = (props) => {
         const token = data.token;
         const user = data.user;
         localStorage.setItem("token", token);
-        localStorage.setItem("user", user);
+        localStorage.setItem("user", JSON.stringify(user));
         props.setAuth(true);
         props.setUser(user);
         document.cookie = "login=true";
