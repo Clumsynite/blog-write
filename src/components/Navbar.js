@@ -1,5 +1,5 @@
 import { NavLink, useHistory } from "react-router-dom";
-// import { userLogout } from "../scripts/api-calls";
+import { userLogout } from "../scripts/api-calls";
 import { useLoading, Puff } from "@agney/react-loading";
 
 const Navbar = (props) => {
@@ -13,20 +13,20 @@ const Navbar = (props) => {
   });
 
   const handleLogout = async () => {
-    // try {
-    //   const data = await userLogout();
-    //   if (data.message === "Logged out successfully") {
-    //     localStorage.clear();
-    //     props.clearUser();
-    //     props.setAuth(false);
-    //     document.cookie = "login=;expires=Thu, 01 Jan 1970 00:00:01 GMT;";
-    //     history.push("/login");
-    //   } else {
-    //     console.error(data);
-    //   }
-    // } catch (error) {
-    //   console.error(error);
-    // }
+    try {
+      const data = await userLogout();
+      if (data.message === "Logged out successfully") {
+        localStorage.clear();
+        props.clearUser();
+        props.setAuth(false);
+        document.cookie = "login=;expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+        history.push("/login");
+      } else {
+        console.error(data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
