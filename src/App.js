@@ -5,8 +5,10 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import Navbar from "./components/Navbar";
 import Particles from "./components/Particles";
+import Navbar from "./components/Navbar";
+import Home from "./components/Home";
+import Footer from "./components/Footer";
 import { ping, userLogout } from "./scripts/api-calls";
 
 const App = () => {
@@ -59,7 +61,13 @@ const App = () => {
           clearUser={() => setuser({})}
           server={server}
         />
+        <div className="container mt-3">
+          <Switch>
+            <Route exact path="/" component={Home} />
+          </Switch>
+        </div>
       </Router>
+      <Footer />
     </div>
   );
 };
