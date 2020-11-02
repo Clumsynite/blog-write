@@ -85,6 +85,24 @@ export const viewBlog = async (id, token) => {
   }
 };
 
+export const newPost = async (post, token) => {
+  try {
+    const response = await fetch(`${apiUrl}/blog/new`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${token}`,
+      },
+      credentials: "include",
+      body: JSON.stringify(post),
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const addComment = async (id, comment, token) => {
   try {
     const response = await fetch(`${apiUrl}/blog/${id}/comment/new`, {
