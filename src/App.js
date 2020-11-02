@@ -67,7 +67,9 @@ const App = () => {
           </Switch>
         </div>
       </Router>
-      <Footer />
+      <div style={{ marginTop: 80 }}>
+        <Footer />
+      </div>
     </div>
   );
 };
