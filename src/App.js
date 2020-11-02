@@ -52,7 +52,13 @@ const App = () => {
     <div className="App">
       <Particles />
       <Router>
-        <Navbar server={server} />
+        <Navbar
+          authenticated={authenticated}
+          setAuth={setauthenticated}
+          user={user}
+          clearUser={() => setuser({})}
+          server={server}
+        />
       </Router>
     </div>
   );
