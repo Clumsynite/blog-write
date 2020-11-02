@@ -77,6 +77,11 @@ const App = () => {
             />
             <UnauthenticatedRoute exact path="/signup" component={Signup} />
             <AuthenticatedRoute exact path="/profile" component={Profile} />
+            <AuthenticatedRoute
+              exact
+              path="/blog/:id/view"
+              component={BlogPost}
+            />
             <Redirect to="/" />
           </Switch>
         </div>
