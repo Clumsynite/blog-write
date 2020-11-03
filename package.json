@@ -12,6 +12,8 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.0",
     "react-tsparticles": "^1.18.8",
+    "sweetalert2": "^10.9.0",
+    "sweetalert2-react-content": "^3.2.1",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
