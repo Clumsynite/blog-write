@@ -102,21 +102,3 @@ export const newPost = async (post, token) => {
     return error;
   }
 };
-
-export const addComment = async (id, comment, token) => {
-  try {
-    const response = await fetch(`${apiUrl}/blog/${id}/comment/new`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${token}`,
-      },
-      credentials: "include",
-      body: JSON.stringify(comment),
-    });
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    return error;
-  }
-};
