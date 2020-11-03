@@ -13,6 +13,7 @@ import { removePost } from "../scripts/api-calls";
 import "../styles/BlogCard.css";
 
 const Card = (props) => {
+  const token = localStorage.getItem("token");
   const { author, title, content, added, _id, draft } = props.blog;
   const MySwal = withReactContent(Swal);
   const [removing, setremoving] = useState(false);
@@ -27,11 +28,32 @@ const Card = (props) => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire("Deleted!", "Your file has been deleted.", "success");
+        remove();
       }
     });
   };
 
+  const remove = async () => {
+    try {
+      const data = await removePost(_id, token);
+      if (data.message) {
+        Swal.fire("Deleted!", "Your file has been deleted.", "success");
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!",
+      });
+      console.error(error);
+    }
+  };
   return (
     <div className="card text-white bg-primary shadow mb-4 bg-white rounded">
       <Link to={`/blog/${_id}/view`} className="link mx-0">
