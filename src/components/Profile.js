@@ -38,7 +38,7 @@ const Profile = () => {
       }
     };
     getProfile();
-  }, []);
+  }, [profile]);
 
   return (
     <div className="Profile">
