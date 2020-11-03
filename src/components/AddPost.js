@@ -8,6 +8,11 @@ const AddPost = () => {
   const [draft, setdraft] = useState(false);
   const user = JSON.parse(localStorage.getItem("user"));
 
+  const handleClick = (e) => {
+    e.preventDefault()
+    
+  }
+
   return (
     <div className="AddPost">
       <div className="Preview">
@@ -40,6 +45,9 @@ const AddPost = () => {
                 <input
                   className="form-check-input mx-2"
                   type="checkbox"
+                  onClick={(e) => {
+                    setdraft(e.target.checked);
+                  }}
                 />
               </label>
             </div>
