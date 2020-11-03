@@ -1,6 +1,6 @@
 import { Editor } from "@tinymce/tinymce-react";
 
-const TintMCE = (props) => {
+const TinyMCE = (props) => {
   return (
     <Editor
       apiKey="iegn84mumhivsy1it2lvc8qjfxkaav0snoxsx4u66dxlnz3g"
