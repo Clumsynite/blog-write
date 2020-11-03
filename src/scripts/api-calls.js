@@ -102,3 +102,21 @@ export const newPost = async (post, token) => {
     return error;
   }
 };
+
+export const updatePost = async (id, post, token) => {
+  try {
+    const response = await fetch(`${apiUrl}/blog/${id}/update`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${token}`,
+      },
+      credentials: "include",
+      body: JSON.stringify(post),
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
