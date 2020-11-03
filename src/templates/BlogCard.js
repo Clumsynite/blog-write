@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Markup } from "interweave";
 import {
   getRelativeTime,
   getContentPreview,
@@ -13,7 +14,9 @@ const Card = (props) => {
       <Link to={`/blog/${_id}/view`} className="link mx-0">
         <div className="card-header text-center bg-dark">{title}</div>
         <div className="card-body bg-light text-dark">
-          <div className="card-text ">{getContentPreview(content)}</div>
+          <div className="card-text ">
+            <Markup content={getContentPreview(content)} />
+          </div>
         </div>
       </Link>
       <div
