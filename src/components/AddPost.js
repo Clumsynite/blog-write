@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { TailSpin } from "@agney/react-loading";
 import TinyMCE from "../templates/TinyMCE";
 import PostCard from "../templates/PostCard";
 import Error from "../templates/Error";
+import { newPost } from "../scripts/api-calls";
 
 const AddPost = () => {
+  const history = useHistory();
   const user = JSON.parse(localStorage.getItem("user"));
+  const token = localStorage.getItem("token");
   const [title, settitle] = useState("");
   const [content, setcontent] = useState("");
   const [draft, setdraft] = useState(false);
@@ -24,7 +28,21 @@ const AddPost = () => {
     } else if (content.trim().length === 0) {
       seterror("Post content can't be empty");
     } else {
-      console.log("woah");
+      setposting(true);
+      submitPost();
+    }
+  };
+
+  const submitPost = async () => {
+    try {
+      const data = await newPost({ title, content, draft }, token);
+      setposting(false);
+      if (!data.error) {
+        history.push("/profile");
+      }
+    } catch (error) {
+      console.log(error);
+      setposting(false);
     }
   };
 
