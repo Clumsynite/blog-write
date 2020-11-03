@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from "react";
+import { TailSpin } from "@agney/react-loading";
 import TinyMCE from "../templates/TinyMCE";
 import PostCard from "../templates/PostCard";
 import Error from "../templates/Error";
 
 const AddPost = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
   const [title, settitle] = useState("");
   const [content, setcontent] = useState("");
   const [draft, setdraft] = useState(false);
-  const user = JSON.parse(localStorage.getItem("user"));
   const [error, seterror] = useState("");
   useEffect(() => {
     return setTimeout(() => {
       seterror("");
     }, 5000);
   }, [error, seterror]);
+  const [posting, setposting] = useState(false);
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -67,11 +69,15 @@ const AddPost = () => {
             </div>
             <button
               type="submit"
-              className="btn btn-outline-success"
+              className={`btn ${
+                posting ? "btn-success" : "btn-outline-success"
+              } w-50`}
               onClick={handleClick}
               title="Post"
+              disabled={posting}
             >
-              Submit
+              {!posting && "Submit"}
+              {posting && <TailSpin width="20" />}
             </button>
           </div>
         </div>
