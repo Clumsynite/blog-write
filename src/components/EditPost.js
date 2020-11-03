@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { TailSpin } from "@agney/react-loading";
+import { useLoading, Oval, TailSpin } from "@agney/react-loading";
 import TinyMCE from "../templates/TinyMCE";
 import PostCard from "../templates/PostCard";
 import Error from "../templates/Error";
@@ -8,9 +8,17 @@ import { newPost } from "../scripts/api-calls";
 
 const AddPost = () => {
   const history = useHistory();
-  const {id} = useParams();
+  const { id } = useParams();
   const user = JSON.parse(localStorage.getItem("user"));
   const token = localStorage.getItem("token");
+  const [loading, setloading] = useState(true);
+  const { containerProps, indicatorEl } = useLoading({
+    loading,
+    indicator: <Oval width="100" />,
+    loaderProps: {
+      style: { color: "#007BFF" },
+    },
+  });
   const [title, settitle] = useState("");
   const [content, setcontent] = useState("");
   const [draft, setdraft] = useState(false);
@@ -49,6 +57,11 @@ const AddPost = () => {
 
   return (
     <div className="AddPost">
+      {loading && (
+        <div className="text-center my-5" {...containerProps}>
+          {indicatorEl}
+        </div>
+      )}
       <div className="Preview">
         <PostCard post={{ title, content, added: new Date(), author: user }} />
       </div>
