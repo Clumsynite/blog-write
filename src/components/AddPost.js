@@ -1,23 +1,37 @@
 import React, { useState, useEffect } from "react";
 import TinyMCE from "../templates/TinyMCE";
 import PostCard from "../templates/PostCard";
+import Error from "../templates/Error";
 
 const AddPost = () => {
   const [title, settitle] = useState("");
   const [content, setcontent] = useState("");
   const [draft, setdraft] = useState(false);
   const user = JSON.parse(localStorage.getItem("user"));
+  const [error, seterror] = useState("");
+  useEffect(() => {
+    return setTimeout(() => {
+      seterror("");
+    }, 5000);
+  }, [error, seterror]);
 
   const handleClick = (e) => {
-    e.preventDefault()
-    
-  }
+    e.preventDefault();
+    if (title.trim().length === 0) {
+      seterror("Post Title can't be empty");
+    } else if (content.trim().length === 0) {
+      seterror("Post content can't be empty");
+    } else {
+      console.log("woah");
+    }
+  };
 
   return (
     <div className="AddPost">
       <div className="Preview">
         <PostCard post={{ title, content, added: new Date(), author: user }} />
       </div>
+      {error.length > 0 && <Error error={error} />}
       <div className="Edit">
         <div className="mb-4 shadow">
           <input
@@ -51,7 +65,12 @@ const AddPost = () => {
                 />
               </label>
             </div>
-            <button type="submit" className="btn btn-outline-success">
+            <button
+              type="submit"
+              className="btn btn-outline-success"
+              onClick={handleClick}
+              title="Post"
+            >
               Submit
             </button>
           </div>
