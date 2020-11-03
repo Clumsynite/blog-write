@@ -5,13 +5,13 @@ import PostCard from "../templates/PostCard";
 const AddPost = () => {
   const [title, settitle] = useState("");
   const [content, setcontent] = useState("");
-  const [time, setTime] = useState(new Date().getTime());
   const [draft, setdraft] = useState(false);
   const user = JSON.parse(localStorage.getItem("user"));
+
   return (
     <div className="AddPost">
       <div className="Preview">
-        <PostCard post={{ title, content, added: time, author: user }} />
+        <PostCard post={{ title, content, added: new Date(), author: user }} />
       </div>
       <div className="Edit">
         <div className="mb-4 shadow">
@@ -33,6 +33,20 @@ const AddPost = () => {
             }}
             value={content}
           />
+          <div className="d-flex justify-content-between align-content-center">
+            <div className="form-check form-check-inline ml-2 bg-light">
+              <label className="form-check-label">
+                Save as Draft
+                <input
+                  className="form-check-input mx-2"
+                  type="checkbox"
+                />
+              </label>
+            </div>
+            <button type="submit" className="btn btn-outline-success">
+              Submit
+            </button>
+          </div>
         </div>
       </div>
     </div>
