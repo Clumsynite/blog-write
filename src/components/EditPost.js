@@ -4,9 +4,9 @@ import { useLoading, Oval, TailSpin } from "@agney/react-loading";
 import TinyMCE from "../templates/TinyMCE";
 import PostCard from "../templates/PostCard";
 import Error from "../templates/Error";
-import { newPost } from "../scripts/api-calls";
+import { viewBlog, updatePost } from "../scripts/api-calls";
 
-const AddPost = () => {
+const EditPost = () => {
   const history = useHistory();
   const { id } = useParams();
   const user = JSON.parse(localStorage.getItem("user"));
@@ -30,6 +30,28 @@ const AddPost = () => {
   }, [error, seterror]);
   const [posting, setposting] = useState(false);
 
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const data = await viewBlog(id, token);
+        if (data.error) {
+          setloading(false);
+          seterror(
+            `Blog Post not found. There's a Problem fetching Post: ${id}`
+          );
+          return;
+        }
+        settitle(data.blog.title);
+        setcontent(data.blog.content);
+        setloading(false);
+      } catch (error) {
+        console.error(error);
+        setloading(false);
+      }
+    };
+    fetchPost();
+  }, [id, token, settitle, setcontent]);
+
   const handleClick = (e) => {
     e.preventDefault();
     if (title.trim().length === 0) {
@@ -44,7 +66,7 @@ const AddPost = () => {
 
   const submitPost = async () => {
     try {
-      const data = await newPost({ title, content, draft }, token);
+      const data = await updatePost(id, { title, content, draft }, token);
       setposting(false);
       if (!data.error) {
         history.push("/profile");
@@ -56,66 +78,72 @@ const AddPost = () => {
   };
 
   return (
-    <div className="AddPost">
+    <div className="EditPost">
       {loading && (
         <div className="text-center my-5" {...containerProps}>
           {indicatorEl}
         </div>
       )}
-      <div className="Preview">
-        <PostCard post={{ title, content, added: new Date(), author: user }} />
-      </div>
-      {error.length > 0 && <Error error={error} />}
-      <div className="Edit">
-        <div className="mb-4 shadow">
-          <input
-            type="text"
-            placeholder="Enter Post Title"
-            maxLength="40"
-            onChange={(e) => {
-              settitle(e.target.value);
-            }}
-            value={title}
-            className="form-control"
-          />
-          <TinyMCE
-            height={250}
-            placeholder={"Enter content for your post here"}
-            handleChange={(content) => {
-              setcontent(content);
-            }}
-            value={content}
-          />
-          <div className="d-flex justify-content-between align-content-center">
-            <div className="form-check form-check-inline ml-2 bg-light">
-              <label className="form-check-label">
-                Save as Draft
-                <input
-                  className="form-check-input mx-2"
-                  type="checkbox"
-                  onClick={(e) => {
-                    setdraft(e.target.checked);
-                  }}
-                />
-              </label>
+      {!loading && (
+        <div>
+          <div className="Preview">
+            <PostCard
+              post={{ title, content, added: new Date(), author: user }}
+            />
+          </div>
+          {error.length > 0 && <Error error={error} />}
+          <div className="Edit">
+            <div className="mb-4 shadow">
+              <input
+                type="text"
+                placeholder="Enter Post Title"
+                maxLength="40"
+                onChange={(e) => {
+                  settitle(e.target.value);
+                }}
+                value={title}
+                className="form-control"
+              />
+              <TinyMCE
+                height={250}
+                placeholder={"Enter content for your post here"}
+                handleChange={(content) => {
+                  setcontent(content);
+                }}
+                value={content}
+              />
+              <div className="d-flex justify-content-between align-content-center">
+                <div className="form-check form-check-inline ml-2 bg-light">
+                  <label className="form-check-label">
+                    Save as Draft
+                    <input
+                      className="form-check-input mx-2"
+                      type="checkbox"
+                      onClick={(e) => {
+                        setdraft(e.target.checked);
+                      }}
+                    />
+                  </label>
+                </div>
+                <button
+                  type="submit"
+                  className={`btn ${
+                    posting ? "btn-success" : "btn-outline-success"
+                  } w-50`}
+                  onClick={handleClick}
+                  title="Post"
+                  disabled={posting}
+                >
+                  {!posting && "Submit"}
+                  {posting && <TailSpin width="20" />}
+                </button>
+              </div>
             </div>
-            <button
-              type="submit"
-              className={`btn ${
-                posting ? "btn-success" : "btn-outline-success"
-              } w-50`}
-              onClick={handleClick}
-              title="Post"
-              disabled={posting}
-            >
-              {!posting && "Submit"}
-              {posting && <TailSpin width="20" />}
-            </button>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
 
-export default AddPost;
+export default EditPost;
