@@ -43,6 +43,7 @@ const EditPost = () => {
         }
         settitle(data.blog.title);
         setcontent(data.blog.content);
+        setdraft(data.blog.draft);
         setloading(false);
       } catch (error) {
         console.error(error);
@@ -119,7 +120,8 @@ const EditPost = () => {
                     <input
                       className="form-check-input mx-2"
                       type="checkbox"
-                      onClick={(e) => {
+                      checked={draft || false}
+                      onChange={(e) => {
                         setdraft(e.target.checked);
                       }}
                     />
