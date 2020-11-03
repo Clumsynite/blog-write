@@ -120,3 +120,19 @@ export const updatePost = async (id, post, token) => {
     return error;
   }
 };
+
+export const removePost = async (id, token) => {
+  try {
+    const response = await fetch(`${apiUrl}/blog/${id}/delete`, {
+      method: "DELETE",
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      credentials: "include",
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
