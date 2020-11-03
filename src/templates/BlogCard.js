@@ -43,16 +43,15 @@ const Card = (props) => {
         </div>
       </div>
       <div className="mt-1 d-flex align-items-center bg-success">
-        <button className="btn btn-info w-50" title="Edit Post">
-          <Link to={`/blog/${_id}/edit`} className="link-white">
-            Edit
-          </Link>
-        </button>
-        <button className="btn btn-danger w-50" title="Delete Post">
-          <Link to={`/blog/${_id}/remove`} className="link-white">
-            Remove
-          </Link>
-        </button>
+        <Link to={`/blog/${_id}/edit`} className="link-white btn btn-info w-50">
+          Edit
+        </Link>
+        <Link
+          to={`/blog/${_id}/remove`}
+          className="link-white link-white btn btn-danger w-50"
+        >
+          Remove
+        </Link>
       </div>
     </div>
   );
