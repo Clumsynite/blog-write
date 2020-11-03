@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Editor } from "@tinymce/tinymce-react";
+import TinyMCE from "../templates/TinyMCE";
 import PostCard from "../templates/PostCard";
 
 const AddPost = () => {
@@ -32,24 +32,10 @@ const AddPost = () => {
             value={title}
             className="form-control"
           />
-          <Editor
-            apiKey="iegn84mumhivsy1it2lvc8qjfxkaav0snoxsx4u66dxlnz3g"
-            initialValue=""
-            init={{
-              height: 250,
-              menubar: false,
-              plugins: [
-                "advlist autolink lists link image charmap print preview anchor",
-                "searchreplace visualblocks code fullscreen",
-                "insertdatetime media table paste code help wordcount",
-              ],
-              toolbar:
-                "undo redo | formatselect | bold italic backcolor | " +
-                "alignleft aligncenter alignright alignjustify | " +
-                "bullist numlist outdent indent | removeformat | help",
-              placeholder: "Enter content for your post here",
-            }}
-            onEditorChange={(content) => {
+          <TinyMCE
+            height={250}
+            placeholder={"Enter content for your post here"}
+            handleChange={(content) => {
               setcontent(content);
             }}
             value={content}
