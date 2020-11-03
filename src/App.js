@@ -13,6 +13,7 @@ import Signup from "./components/Signup";
 import Profile from "./components/Profile";
 import BlogPost from "./components/BlogPost";
 import AddPost from "./components/AddPost";
+import EditPost from "./components/EditPost";
 import Footer from "./components/Footer";
 import AuthenticatedRoute from "./routes/AuthenticatedRoute";
 import UnauthenticatedRoute from "./routes/UnauthenticatedRoute";
@@ -85,6 +86,11 @@ const App = () => {
               component={BlogPost}
             />
             <AuthenticatedRoute exact path="/blog/new" component={AddPost} />
+            <AuthenticatedRoute
+              exact
+              path="/blog/:id/edit"
+              component={EditPost}
+            />
             <Redirect to="/" />
           </Switch>
         </div>
