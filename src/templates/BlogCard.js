@@ -1,14 +1,37 @@
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Markup } from "interweave";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import { TailSpin } from "@agney/react-loading";
 import {
   getRelativeTime,
   getContentPreview,
   getFullname,
 } from "../scripts/helper";
+import { removePost } from "../scripts/api-calls";
 import "../styles/BlogCard.css";
 
 const Card = (props) => {
   const { author, title, content, added, _id, draft } = props.blog;
+  const MySwal = withReactContent(Swal);
+  const [removing, setremoving] = useState(false);
+  const deletePost = () => {
+    MySwal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Deleted!", "Your file has been deleted.", "success");
+      }
+    });
+  };
+
   return (
     <div className="card text-white bg-primary shadow mb-4 bg-white rounded">
       <Link to={`/blog/${_id}/view`} className="link mx-0">
@@ -46,12 +69,10 @@ const Card = (props) => {
         <Link to={`/blog/${_id}/edit`} className="link-white btn btn-info w-50">
           Edit
         </Link>
-        <Link
-          to={`/blog/${_id}/remove`}
-          className="link-white link-white btn btn-danger w-50"
-        >
+
+        <button className="btn btn-danger w-50" onClick={deletePost}>
           Remove
-        </Link>
+        </button>
       </div>
     </div>
   );
