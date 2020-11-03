@@ -5,14 +5,7 @@ import PostCard from "../templates/PostCard";
 const AddPost = () => {
   const [title, settitle] = useState("");
   const [content, setcontent] = useState("");
-  const [time, setTime] = useState(new Date());
-  useEffect(() => {
-    setInterval(() => {
-      setTime(new Date());
-    }, 1000);
-    return time;
-  }, [time, setTime]);
-
+  const [time, setTime] = useState(new Date().getTime());
   const [draft, setdraft] = useState(false);
   const user = JSON.parse(localStorage.getItem("user"));
   return (
