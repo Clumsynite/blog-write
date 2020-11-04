@@ -137,6 +137,20 @@ export const removePost = async (id, token) => {
   }
 };
 
+export const viewComment = async (id, token) => {
+  try {
+    const response = await fetch(`${apiUrl}/comment/${id}/view`, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      credentials: "include",
+    });
+    return await response.json();
+  } catch (error) {
+    return error;
+  }
+};
+
 export const updateComment = async (id, comment, token) => {
   try {
     const response = await fetch(`${apiUrl}/comment/${id}/update`, {
