@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import BlogCard from "../templates/BlogCard";
 import CommentCard from "../templates/CommentCard";
@@ -7,6 +7,7 @@ import { myProfile } from "../scripts/api-calls";
 import { getFullname, getRelativeTime } from "../scripts/helper";
 
 const Profile = () => {
+  const token = localStorage.getItem("token");
   const [loading, setloading] = useState(true);
   const { containerProps, indicatorEl } = useLoading({
     loading,
@@ -18,27 +19,27 @@ const Profile = () => {
   const [profile, setprofile] = useState([]);
   const [render, setRender] = useState();
   const [user, setUser] = useState({});
-  useEffect(() => {
-    const token = localStorage.getItem("token");
 
-    const getProfile = async () => {
-      try {
-        const data = await myProfile(token);
-        setprofile({
-          user: data.user,
-          blogs: data.blogs.reverse(),
-          comments: data.comments.reverse(),
-        });
-        setUser(data.user);
-        setRender("blogs");
-        setloading(false);
-      } catch (error) {
-        console.error(error);
-        setloading(false);
-      }
-    };
+  const getProfile = useCallback(async () => {
+    try {
+      const data = await myProfile(token);
+      setprofile({
+        user: data.user,
+        blogs: data.blogs.reverse(),
+        comments: data.comments.reverse(),
+      });
+      setUser(data.user);
+      setRender("blogs");
+      setloading(false);
+    } catch (error) {
+      console.error(error);
+      setloading(false);
+    }
+  }, [token]);
+
+  useEffect(() => {
     getProfile();
-  }, [profile]);
+  }, [getProfile]);
 
   return (
     <div className="Profile">
@@ -95,7 +96,7 @@ const Profile = () => {
       {render === "blogs" &&
         profile.blogs.length > 0 &&
         profile.blogs.map((blog, index) => {
-          return <BlogCard blog={blog} key={index} />;
+          return <BlogCard blog={blog} key={index} refresh={getProfile} />;
         })}
 
       {render === "comments" && profile.comments.length === 0 && (
