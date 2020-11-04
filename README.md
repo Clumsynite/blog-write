@@ -1,8 +1,31 @@
-# Getting Started with Create React App
+# Blog Write
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Introduction
+
+Frontend built to acess and read the blogs, using [Blog-API](https://clumsy-blog.herokuapp.com/).
+
+- Refer Blog-Write Live Page, [***here***](https://clumsynite.github.io/blog-write/)
+- Refer Blog-Read, [***Live Page***](https://clumsynite.github.io/blog-read/) **||** [***Repository***](https://github.com/clumsynite/blog-read)
+- Refer the API repository, [***here***](https://github.com/Clumsynite/blog-api)
+
+Blog-Write is where you can create new blog posts. If you want to read posts by other users, you'll have to go to [`Blog-Read`](https://clumsynite.github.io/blog-read/).
+Both sites need user accounts, in order to be accessed.
+
+If you are new and don't have an account, you can go to the [Signup](https://clumsynite.github.io/blog-write/#/signup) page and create a new account over there.
+
+> Be sure to remember you password, you can't reset it and there's nothing I can do if you forget it.
+
+After your authentication is successful, you can:
+
+- *Make new Posts*
+- *Edit your Posts*
+- *Delete your Posts*
+- *Edit your Comments*
+- *Delete your Comments*
 
 ## Available Scripts
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 In the project directory, you can run:
 
