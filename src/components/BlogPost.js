@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useLoading, Oval } from "@agney/react-loading";
 import { viewBlog } from "../scripts/api-calls";
 import PostCard from "../templates/PostCard";
@@ -55,7 +55,19 @@ const BlogPost = () => {
           {indicatorEl}
         </div>
       )}
-      {post.title && !loading && <PostCard post={post} />}
+      {post.title && !loading && (
+        <div>
+          <PostCard post={post} />
+          <div className="mt-n5 d-flex align-items-center justify-content-between rounded shadow">
+            <button className="btn" onClick={() => {}}>
+              <i className="material-icons">delete</i>
+            </button>
+            <Link to={`/blog/${post._id}/edit`} className="btn">
+              <i className="material-icons">edit</i>
+            </Link>
+          </div>
+        </div>
+      )}
       {error.length > 0 > 0 && (
         <div className="w-75 mx-auto">
           <Error error={error} />
