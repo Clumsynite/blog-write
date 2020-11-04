@@ -109,16 +109,30 @@ const Profile = () => {
         profile.comments.map((comment, index) => {
           const { blog } = comment;
           return (
-            <Link
-              to={`/blog/${blog._id}/view`}
-              className="link shadow"
-              key={index}
-            >
-              <div className="card-header text-center bg-dark text-light align-items-center">
-                You commented on <code>{blog.title}</code>
+            <div className="shadow rounded" key={index}>
+              <Link to={`/blog/${blog._id}/view`} className="link">
+                <div className="card-header text-center bg-dark text-light">
+                  You commented on <code>{blog.title}</code>
+                </div>
+                <CommentCard comment={comment} />
+              </Link>
+              <div className="d-flex align-items-center justify-content-between mt-n5">
+                <button
+                  className="btn"
+                  title="Delete Comment"
+                  onClick={() => {}}
+                >
+                  <i className="material-icons">delete</i>
+                </button>
+                <Link
+                  to={`/comment/${comment._id}/edit`}
+                  className="btn"
+                  title="Edit Comment"
+                >
+                  <i className="material-icons">edit</i>
+                </Link>
               </div>
-              <CommentCard comment={comment} />
-            </Link>
+            </div>
           );
         })}
     </div>
