@@ -34,7 +34,7 @@ const Card = (props) => {
     try {
       const data = await removePost(_id, token);
       if (data.message) {
-        Swal.fire("Deleted!", "Your file has been deleted.", "success");
+        Swal.fire("Deleted!", "Your post has been deleted.", "success");
       } else {
         Swal.fire({
           icon: "error",
@@ -51,6 +51,7 @@ const Card = (props) => {
       console.error(error);
     }
   };
+
   return (
     <div className="card text-white bg-primary shadow mb-4 bg-white rounded">
       <Link to={`/blog/${_id}/view`} className="link mx-0">
