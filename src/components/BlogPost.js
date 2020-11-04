@@ -118,7 +118,34 @@ const BlogPost = () => {
       )}
       {comments.length > 0 &&
         comments.map((comment, index) => {
-          return <CommentCard comment={comment} key={index} />;
+          return (
+            <div className="shadow mb-4" key={index}>
+              <CommentCard comment={comment} />
+              {comment.author._id === post.author._id && (
+                <div
+                  className="d-flex align-items-center justify-content-between mt-n4"
+                  style={{ backgroundColor: "transparent" }}
+                >
+                  <button
+                    className="btn"
+                    title="Delete Comment"
+                    onClick={() => {
+                      // deleteComment(comment._id);
+                    }}
+                  >
+                    <i className="material-icons">delete</i>
+                  </button>
+                  <Link
+                    to={`/comment/${comment._id}/edit`}
+                    className="btn"
+                    title="Edit Comment"
+                  >
+                    <i className="material-icons">edit</i>
+                  </Link>
+                </div>
+              )}
+            </div>
+          );
         })}
     </div>
   );
