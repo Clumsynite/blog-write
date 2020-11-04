@@ -34,6 +34,7 @@ const Card = (props) => {
     try {
       const data = await removePost(_id, token);
       if (data.message) {
+        props.refresh();
         Swal.fire("Deleted!", "Your post has been deleted.", "success");
       } else {
         Swal.fire({
