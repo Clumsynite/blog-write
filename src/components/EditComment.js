@@ -36,14 +36,14 @@ const EditComment = () => {
         setloading(false);
         if (data.error) {
           seterror(
-            `Comment not found. There's a Problem fetching Comment: ${id}`
+            `Comment not found. There's a Problem fetching Comment: ${id}. Redirecting...`
           );
           setTimeout(() => {
             history.push("/profile");
           }, 5000);
         } else if (data.author !== user._id) {
           seterror(
-            "This is not your Comment. You can't edit someone else's comment."
+            "This is not your Comment. You can't edit someone else's comment. Redirecting..."
           );
           setTimeout(() => {
             history.push("/profile");
