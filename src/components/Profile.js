@@ -5,7 +5,7 @@ import withReactContent from "sweetalert2-react-content";
 import { useLoading, Bars } from "@agney/react-loading";
 import BlogCard from "../templates/BlogCard";
 import CommentCard from "../templates/CommentCard";
-import { myProfile } from "../scripts/api-calls";
+import { myProfile, removeComment } from "../scripts/api-calls";
 import { getFullname, getRelativeTime } from "../scripts/helper";
 
 const Profile = () => {
@@ -43,7 +43,44 @@ const Profile = () => {
     getProfile();
   }, [getProfile]);
 
-  const deleteComment = () => {};
+  const MySwal = withReactContent(Swal);
+  const deleteComment = (commentId) => {
+    MySwal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        remove(commentId);
+      }
+    });
+  };
+
+  const remove = async (commentId) => {
+    try {
+      const data = await removeComment(commentId, token);
+      if (data.message) {
+        Swal.fire("Deleted!", "Your comment has been deleted.", "success");
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!",
+      });
+      console.error(error);
+    }
+  };
 
   return (
     <div className="Profile">
@@ -124,7 +161,9 @@ const Profile = () => {
                 <button
                   className="btn"
                   title="Delete Comment"
-                  onClick={deleteComment}
+                  onClick={() => {
+                    deleteComment(comment._id);
+                  }}
                 >
                   <i className="material-icons">delete</i>
                 </button>
