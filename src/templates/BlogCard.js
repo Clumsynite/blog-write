@@ -1,9 +1,7 @@
-import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Markup } from "interweave";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { TailSpin } from "@agney/react-loading";
 import {
   getRelativeTime,
   getContentPreview,
@@ -16,7 +14,6 @@ const Card = (props) => {
   const token = localStorage.getItem("token");
   const { author, title, content, added, _id, draft } = props.blog;
   const MySwal = withReactContent(Swal);
-  const [removing, setremoving] = useState(false);
   const deletePost = () => {
     MySwal.fire({
       title: "Are you sure?",
