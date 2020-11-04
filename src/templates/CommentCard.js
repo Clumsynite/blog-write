@@ -5,7 +5,7 @@ import "../styles/BlogCard.css";
 const Card = (props) => {
   const { author, title, content, added } = props.comment;
   return (
-    <div className="card shadow rounder mb-3">
+    <div className="card mb-4">
       <div className="card-body bg-light text-dark">
         <h4 className="card-title">{title}</h4>
         <div className="card-text ">
