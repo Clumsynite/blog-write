@@ -22,7 +22,7 @@ const Profile = () => {
   const [render, setRender] = useState();
   const [user, setUser] = useState({});
 
-  const getProfile = useCallback(async () => {
+  const getProfile = useCallback(async (render) => {
     try {
       const data = await myProfile(token);
       setprofile({
@@ -31,7 +31,7 @@ const Profile = () => {
         comments: data.comments.reverse(),
       });
       setUser(data.user);
-      setRender("blogs");
+      setRender(render);
       setloading(false);
     } catch (error) {
       console.error(error);
@@ -40,7 +40,7 @@ const Profile = () => {
   }, [token]);
 
   useEffect(() => {
-    getProfile();
+    getProfile("blogs");
   }, [getProfile]);
 
   const MySwal = withReactContent(Swal);
