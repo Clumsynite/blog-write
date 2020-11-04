@@ -1,6 +1,16 @@
 {
   "name": "blog-write",
-  "version": "0.1.0",
+  "author": {
+    "name": "Clumsyknight",
+    "email": "clusmsyknight@gmail.com",
+    "url": "https:/www.github.com/clumsynite"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Clumsynite/blog-write"
+  },
+  "homepage": "https://clumsynite.github.io/blog-write",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@agney/react-loading": "^0.1.2",
@@ -20,7 +30,9 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
