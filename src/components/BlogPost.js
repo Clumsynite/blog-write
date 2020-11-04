@@ -48,6 +48,8 @@ const BlogPost = () => {
     fetchPost();
   }, [id, token]);
 
+  const deletePost = () => {};
+
   return (
     <div>
       {loading && (
@@ -59,10 +61,14 @@ const BlogPost = () => {
         <div>
           <PostCard post={post} />
           <div className="mt-n5 d-flex align-items-center justify-content-between rounded shadow">
-            <button className="btn" onClick={() => {}}>
+            <button className="btn" title="Delete Post" onClick={deletePost}>
               <i className="material-icons">delete</i>
             </button>
-            <Link to={`/blog/${post._id}/edit`} className="btn">
+            <Link
+              to={`/blog/${post._id}/edit`}
+              className="btn"
+              title="Edit Post"
+            >
               <i className="material-icons">edit</i>
             </Link>
           </div>
