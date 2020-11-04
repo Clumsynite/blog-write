@@ -22,22 +22,25 @@ const Profile = () => {
   const [render, setRender] = useState();
   const [user, setUser] = useState({});
 
-  const getProfile = useCallback(async (render) => {
-    try {
-      const data = await myProfile(token);
-      setprofile({
-        user: data.user,
-        blogs: data.blogs.reverse(),
-        comments: data.comments.reverse(),
-      });
-      setUser(data.user);
-      setRender(render);
-      setloading(false);
-    } catch (error) {
-      console.error(error);
-      setloading(false);
-    }
-  }, [token]);
+  const getProfile = useCallback(
+    async (render) => {
+      try {
+        const data = await myProfile(token);
+        setprofile({
+          user: data.user,
+          blogs: data.blogs.reverse(),
+          comments: data.comments.reverse(),
+        });
+        setUser(data.user);
+        setRender(render || "blogs");
+        setloading(false);
+      } catch (error) {
+        console.error(error);
+        setloading(false);
+      }
+    },
+    [token]
+  );
 
   useEffect(() => {
     getProfile("blogs");
@@ -64,6 +67,7 @@ const Profile = () => {
     try {
       const data = await removeComment(commentId, token);
       if (data.message) {
+        getProfile("comments");
         Swal.fire("Deleted!", "Your comment has been deleted.", "success");
       } else {
         Swal.fire({
