@@ -39,14 +39,14 @@ const EditComment = () => {
             `Comment not found. There's a Problem fetching Comment: ${id}`
           );
           setTimeout(() => {
-            history.goBack();
+            history.push("/profile");
           }, 5000);
         } else if (data.author !== user._id) {
           seterror(
             "This is not your Comment. You can't edit someone else's comment."
           );
           setTimeout(() => {
-            history.goBack();
+            history.push("/profile");
           }, 5000);
         } else {
           setcontent(data.content);
