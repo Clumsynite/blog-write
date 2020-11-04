@@ -136,3 +136,19 @@ export const removePost = async (id, token) => {
     return error;
   }
 };
+
+export const removeComment = async (id, token) => {
+  try {
+    const response = await fetch(`${apiUrl}/comment/${id}/delete`, {
+      method: "DELETE",
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      credentials: "include",
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
