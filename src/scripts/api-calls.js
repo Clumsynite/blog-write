@@ -137,6 +137,24 @@ export const removePost = async (id, token) => {
   }
 };
 
+export const updateComment = async (id, comment, token) => {
+  try {
+    const response = await fetch(`${apiUrl}/comment/${id}/update`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${token}`,
+      },
+      credentials: "include",
+      body: JSON.stringify(comment),
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const removeComment = async (id, token) => {
   try {
     const response = await fetch(`${apiUrl}/comment/${id}/delete`, {
