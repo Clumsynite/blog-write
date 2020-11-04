@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import { useLoading, Bars } from "@agney/react-loading";
 import BlogCard from "../templates/BlogCard";
 import CommentCard from "../templates/CommentCard";
-import { useLoading, Bars } from "@agney/react-loading";
 import { myProfile } from "../scripts/api-calls";
 import { getFullname, getRelativeTime } from "../scripts/helper";
 
@@ -40,6 +42,8 @@ const Profile = () => {
   useEffect(() => {
     getProfile();
   }, [getProfile]);
+
+  const deleteComment = () => {};
 
   return (
     <div className="Profile">
@@ -120,7 +124,7 @@ const Profile = () => {
                 <button
                   className="btn"
                   title="Delete Comment"
-                  onClick={() => {}}
+                  onClick={deleteComment}
                 >
                   <i className="material-icons">delete</i>
                 </button>
