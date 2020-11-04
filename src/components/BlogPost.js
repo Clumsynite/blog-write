@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useParams, Link, useHistory } from "react-router-dom";
 import { useLoading, Oval } from "@agney/react-loading";
 import Swal from "sweetalert2";
@@ -6,7 +6,7 @@ import withReactContent from "sweetalert2-react-content";
 import PostCard from "../templates/PostCard";
 import CommentCard from "../templates/CommentCard";
 import Error from "../templates/Error";
-import { viewBlog, removePost } from "../scripts/api-calls";
+import { viewBlog, removePost, removeComment } from "../scripts/api-calls";
 
 const BlogPost = () => {
   const { id } = useParams();
@@ -29,27 +29,27 @@ const BlogPost = () => {
 
   const [post, setPost] = useState({});
   const [comments, setComments] = useState([]);
-  useEffect(() => {
-    const fetchPost = async () => {
-      try {
-        const data = await viewBlog(id, token);
-        if (data.error || data.blog === null) {
-          setloading(false);
-          seterror(
-            `Blog Post not found. There's a Problem fetching Post: ${id}`
-          );
-          return;
-        }
-        setPost(data.blog);
-        setComments(data.comment.reverse());
+
+  const fetchPost = useCallback(async () => {
+    try {
+      const data = await viewBlog(id, token);
+      if (data.error || data.blog === null) {
         setloading(false);
-      } catch (error) {
-        console.error(error);
-        setloading(false);
+        seterror(`Blog Post not found. There's a Problem fetching Post: ${id}`);
+        return;
       }
-    };
-    fetchPost();
+      setPost(data.blog);
+      setComments(data.comment.reverse());
+      setloading(false);
+    } catch (error) {
+      console.error(error);
+      setloading(false);
+    }
   }, [id, token]);
+
+  useEffect(() => {
+    fetchPost();
+  }, [fetchPost]);
 
   const MySwal = withReactContent(Swal);
   const deletePost = () => {
@@ -63,17 +63,56 @@ const BlogPost = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        remove();
+        removeBlogPost();
       }
     });
   };
 
-  const remove = async () => {
+  const removeBlogPost = async () => {
     try {
       const data = await removePost(id, token);
       if (data.message) {
         Swal.fire("Deleted!", "Your post has been deleted.", "success");
         history.push("/profile");
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!",
+      });
+      console.error(error);
+    }
+  };
+
+  const deleteComment = (commentId) => {
+    MySwal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        removeSelectedComment(commentId);
+      }
+    });
+  };
+
+  const removeSelectedComment = async (commentId) => {
+    try {
+      const data = await removeComment(commentId, token);
+      if (data.message) {
+        fetchPost();
+        Swal.fire("Deleted!", "Your comment has been deleted.", "success");
       } else {
         Swal.fire({
           icon: "error",
@@ -130,7 +169,7 @@ const BlogPost = () => {
                     className="btn"
                     title="Delete Comment"
                     onClick={() => {
-                      // deleteComment(comment._id);
+                      deleteComment(comment._id);
                     }}
                   >
                     <i className="material-icons">delete</i>
