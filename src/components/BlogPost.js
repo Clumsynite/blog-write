@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useHistory } from "react-router-dom";
 import { useLoading, Oval } from "@agney/react-loading";
-import { viewBlog } from "../scripts/api-calls";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 import PostCard from "../templates/PostCard";
 import CommentCard from "../templates/CommentCard";
 import Error from "../templates/Error";
+import { viewBlog, removePost } from "../scripts/api-calls";
 
 const BlogPost = () => {
   const { id } = useParams();
+  const history = useHistory();
   const token = localStorage.getItem("token");
   const [loading, setloading] = useState(true);
   const { containerProps, indicatorEl } = useLoading({
@@ -30,7 +33,7 @@ const BlogPost = () => {
     const fetchPost = async () => {
       try {
         const data = await viewBlog(id, token);
-        if (data.error) {
+        if (data.error || data.blog === null) {
           setloading(false);
           seterror(
             `Blog Post not found. There's a Problem fetching Post: ${id}`
@@ -48,7 +51,45 @@ const BlogPost = () => {
     fetchPost();
   }, [id, token]);
 
-  const deletePost = () => {};
+  const MySwal = withReactContent(Swal);
+  const deletePost = () => {
+    MySwal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        remove();
+      }
+    });
+  };
+
+  const remove = async () => {
+    try {
+      const data = await removePost(id, token);
+      if (data.message) {
+        Swal.fire("Deleted!", "Your post has been deleted.", "success");
+        history.push("/profile");
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!",
+      });
+      console.error(error);
+    }
+  };
 
   return (
     <div>
@@ -58,17 +99,13 @@ const BlogPost = () => {
         </div>
       )}
       {post.title && !loading && (
-        <div>
+        <div className="mb-4">
           <PostCard post={post} />
           <div className="mt-n5 d-flex align-items-center justify-content-between rounded shadow">
             <button className="btn" title="Delete Post" onClick={deletePost}>
               <i className="material-icons">delete</i>
             </button>
-            <Link
-              to={`/blog/${post._id}/edit`}
-              className="btn"
-              title="Edit Post"
-            >
+            <Link to={`/blog/${id}/edit`} className="btn" title="Edit Post">
               <i className="material-icons">edit</i>
             </Link>
           </div>
