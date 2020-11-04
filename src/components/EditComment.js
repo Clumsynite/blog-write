@@ -61,6 +61,31 @@ const EditComment = () => {
     // eslint-disable-next-line
   }, []);
 
+  const handleClick = (e) => {
+    e.preventDefault();
+    if (title.trim().length === 0) {
+      seterror("Comment Title can't be empty");
+    } else if (content.trim().length === 0) {
+      seterror("Comment content can't be empty");
+    } else {
+      setposting(true);
+      submitPost();
+    }
+  };
+
+  const submitPost = async () => {
+    try {
+      const data = await updateComment(id, { title, content }, token);
+      setposting(false);
+      if (!data.error) {
+        history.push("/profile");
+      }
+    } catch (error) {
+      console.log(error);
+      setposting(false);
+    }
+  };
+
   return (
     <div className="EditComment">
       {loading && (
@@ -69,7 +94,49 @@ const EditComment = () => {
         </div>
       )}
       {error.length > 0 && <Error error={error} />}
-      <h1>Edit Comment</h1>
+      {title.length > 1 && !loading && (
+        <div>
+          <div className="Preview">
+            <CommentCard
+              comment={{ title, content, author: user, added: new Date() }}
+            />
+          </div>
+          <div className="Editor">
+            <div className="mb-4 shadow">
+              <input
+                type="text"
+                placeholder="Enter Post Title"
+                maxLength="40"
+                onChange={(e) => {
+                  settitle(e.target.value);
+                }}
+                value={title}
+                className="form-control"
+              />
+              <TinyMCE
+                height={250}
+                placeholder={"Enter content for your post here"}
+                handleChange={(content) => {
+                  setcontent(content);
+                }}
+                value={content}
+              />
+              <button
+                type="submit"
+                className={`btn ${
+                  posting ? "btn-info" : "btn-outline-info"
+                } btn-block`}
+                onClick={handleClick}
+                title="Post"
+                disabled={posting}
+              >
+                {!posting && "Submit"}
+                {posting && <TailSpin width="20" />}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
