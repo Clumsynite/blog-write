@@ -54,46 +54,47 @@ const Card = (props) => {
   };
 
   return (
-    <div className="card text-white bg-primary shadow mb-4 bg-white rounded">
-      <Link to={`/blog/${_id}/view`} className="link mx-0">
-        <div className="card-header text-center bg-dark">{title}</div>
-        <div className="card-body bg-light text-dark">
-          <div className="card-text ">
-            <Markup content={getContentPreview(content)} />
+    <div className="shadow mb-4 rounded">
+      <div className="card text-white bg-light">
+        <Link to={`/blog/${_id}/view`} className="link mx-0">
+          <div className="card-header text-center bg-dark">{title}</div>
+          <div className="card-body bg-light text-dark">
+            <div className="card-text ">
+              <Markup content={getContentPreview(content)} />
+            </div>
+          </div>
+        </Link>
+        <div
+          className={`card-footer text-white ${
+            draft ? "bg-danger" : "bg-primary"
+          } text-right d-flex justify-content-between flex-wrap`}
+          title={
+            draft
+              ? "This post hasn't been published yet"
+              : "This post is already Published"
+          }
+        >
+          <div className="d-flex align-items-center">
+            <i className="material-icons mr-1">account_circle</i>
+            {getFullname(author)}
+            <strong>
+              <span className="badge badge-pill badge-dark mx-1"> AKA </span>
+            </strong>
+            {author.username}
+          </div>
+          <div className="d-flex align-items-center">
+            <i className="material-icons mr-1">access_time</i>
+            {getRelativeTime(added)}
           </div>
         </div>
-      </Link>
-      <div
-        className={`card-footer text-white ${
-          draft ? "bg-danger" : "bg-primary"
-        } text-right d-flex justify-content-between flex-wrap`}
-        title={
-          draft
-            ? "This post hasn't been published yet"
-            : "This post is already Published"
-        }
-      >
-        <div className="d-flex align-items-center">
-          <i className="material-icons mr-1">account_circle</i>
-          {getFullname(author)}
-          <strong>
-            <span className="badge badge-pill badge-dark mx-1"> AKA </span>
-          </strong>
-          {author.username}
-        </div>
-        <div className="d-flex align-items-center">
-          <i className="material-icons mr-1">access_time</i>
-          {getRelativeTime(added)}
-        </div>
       </div>
-      <div className="mt-1 d-flex align-items-center bg-success">
-        <Link to={`/blog/${_id}/edit`} className="link-white btn btn-info w-50">
-          Edit
-        </Link>
-
-        <button className="btn btn-danger w-50" onClick={deletePost}>
-          Remove
+      <div className="d-flex align-items-center justify-content-between">
+        <button className="btn" title="Delete Post" onClick={deletePost}>
+          <i className="material-icons">delete</i>
         </button>
+        <Link to={`/blog/${_id}/edit`} className="btn" title="Edit Post">
+          <i className="material-icons">edit</i>
+        </Link>
       </div>
     </div>
   );
