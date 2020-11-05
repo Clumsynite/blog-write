@@ -34,23 +34,33 @@ const EditPost = () => {
     const fetchPost = async () => {
       try {
         const data = await viewBlog(id, token);
-        if (data.error) {
-          setloading(false);
-          seterror(
-            `Blog Post not found. There's a Problem fetching Post: ${id}`
-          );
-          return;
-        }
-        settitle(data.blog.title);
-        setcontent(data.blog.content);
-        setdraft(data.blog.draft);
         setloading(false);
+        if (data.error) {
+          seterror(
+            `Comment not found. There's a Problem fetching Comment: ${id}. Redirecting...`
+          );
+          setTimeout(() => {
+            history.push("/profile");
+          }, 5000);
+        } else if (data.blog.author._id !== user._id) {
+          seterror(
+            "This is not your BlogPost. You can't edit someone else's Post. Redirecting..."
+          );
+          setTimeout(() => {
+            history.push("/profile");
+          }, 5000);
+        } else {
+          settitle(data.blog.title);
+          setcontent(data.blog.content);
+          setdraft(data.blog.draft);
+        }
       } catch (error) {
         console.error(error);
         setloading(false);
       }
     };
     fetchPost();
+    // eslint-disable-next-line
   }, [id, token, settitle, setcontent]);
 
   const handleClick = (e) => {
@@ -85,7 +95,8 @@ const EditPost = () => {
           {indicatorEl}
         </div>
       )}
-      {!loading && (
+      {error.length > 0 && <Error error={error} />}
+      {!loading && title.length > 1 && (
         <div>
           <div className="Preview">
             <PostCard
