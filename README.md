@@ -64,9 +64,35 @@ The card has two buttons, which shows the user's post and comment count.
 
 After clicking those buttons you can see posts/comments you have made.
 
+### BlogPost
+
+> Needs Authentication: `true`
+
+_This section represents each blog post (which appears after clicking the card)._
+
+You can see the Post in full here. Below which are the comments made on this post.
+You can't comment on posts on this site.
+However, you can edit or delete you own comments by clicking on the respecting button below the comment.
+Similarly, there will be an edit and delete button above the blog post.
+
+### New Post
+
+> Needs Authentication: `true`
+
+This is where you land after clicking **_New Post_** in the navbar.
+
+Here, you can use the editor to write content for your post, which'll then render a preview for you above the Editor.
+It shows how your post will be rendered for other users.
+
 ### Logout
 
 > A Link which runs the logout function, rendered in navbar after authenticaion is successful.
+
+## Errors
+
+- Sometimes, if you are on the profile page and it doesn't render anything after loading. Try to logout and then login to resolve the issue.
+- If you try to edit someone else's blog or comment, you'll be redirected to the profile page.
+- If you can't submit your blog or comment, try to relogin.
 
 ## Extra Packages used
 
