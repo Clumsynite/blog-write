@@ -23,6 +23,51 @@ After your authentication is successful, you can:
 - _Edit your Comments_
 - _Delete your Comments_
 
+## Contents
+
+### Home
+
+> Needs Authentication: `false`
+
+A simple landing page which some text to give a basic understanding of this project.
+
+`User can access it with or without authentication`
+
+### Login
+
+> Needs Authentication: `false`
+
+User can log into their account with the correct **username** and **password**.
+
+`This page can't be accessed after authentication is successful.`
+
+### Signup
+
+> Needs Authentication: `false`
+
+A new user can create their account here.
+
+Details needed: **Firstname**, **Lastname**, **Username**, **Password**
+
+Password is encrypted on the server before creating the account. So, if you forget your password, the account can't be recovered easily.
+
+`This page can't be accessed after authentication is successful.`
+
+### Profile
+
+> Needs Authentication: `true`
+
+This is where you land after a successful authentication.
+
+Renders a Profile card, which contains the user's details.
+The card has two buttons, which shows the user's post and comment count.
+
+After clicking those buttons you can see posts/comments you have made.
+
+### Logout
+
+> A Link which runs the logout function, rendered in navbar after authenticaion is successful.
+
 ## Extra Packages used
 
 - [`@agney/react-loading`](https://github.com/agneym/react-loading) for loading animations
