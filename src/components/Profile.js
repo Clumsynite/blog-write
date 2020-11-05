@@ -21,19 +21,26 @@ const Profile = () => {
   const [profile, setprofile] = useState([]);
   const [render, setRender] = useState();
   const [user, setUser] = useState({});
+  const [error, seterror] = useState("");
 
   const getProfile = useCallback(
     async (render) => {
       try {
         const data = await myProfile(token);
-        setprofile({
-          user: data.user,
-          blogs: data.blogs.reverse(),
-          comments: data.comments.reverse(),
-        });
-        setUser(data.user);
-        setRender(render || "blogs");
         setloading(false);
+        if (data.blogs) {
+          setprofile({
+            user: data.user,
+            blogs: data.blogs.reverse(),
+            comments: data.comments.reverse(),
+          });
+          setUser(data.user);
+          setRender(render || "blogs");
+        } else {
+          seterror(
+            "There was an error in fetching your profile. Please try to Relogin"
+          );
+        }
       } catch (error) {
         console.error(error);
         setloading(false);
@@ -93,6 +100,7 @@ const Profile = () => {
           {indicatorEl}
         </div>
       )}
+      {error.length > 1 && <div className="alert alert-danger">{error}</div>}
       {profile.user && (
         <div
           className="card mb-4 mx-auto shadow rounded"
