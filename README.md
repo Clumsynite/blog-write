@@ -4,9 +4,9 @@
 
 Frontend built to acess and read the blogs, using [Blog-API](https://clumsy-blog.herokuapp.com/).
 
-- Refer Blog-Write Live Page. [***HERE***](https://clumsynite.github.io/blog-write/)
-- Refer Blog-Read. [***Live Page***](https://clumsynite.github.io/blog-read/) **||** [***Repository***](https://github.com/clumsynite/blog-read)
-- Refer the API repository. [***HERE***](https://github.com/Clumsynite/blog-api)
+- Refer Blog-Write Live Page. [**_HERE_**](https://clumsynite.github.io/blog-write/)
+- Refer Blog-Read. [**_Live Page_**](https://clumsynite.github.io/blog-read/) **||** [**_Repository_**](https://github.com/clumsynite/blog-read)
+- Refer the API repository. [**_HERE_**](https://github.com/Clumsynite/blog-api)
 
 Blog-Write is where you can create new blog posts. If you want to read posts by other users, you'll have to go to [`Blog-Read`](https://clumsynite.github.io/blog-read/).
 Both sites need user accounts, in order to be accessed.
@@ -17,11 +17,11 @@ If you are new and don't have an account, you can go to the [Signup](https://clu
 
 After your authentication is successful, you can:
 
-- *Make new Posts*
-- *Edit your Posts*
-- *Delete your Posts*
-- *Edit your Comments*
-- *Delete your Comments*
+- _Make new Posts_
+- _Edit your Posts_
+- _Delete your Posts_
+- _Edit your Comments_
+- _Delete your Comments_
 
 ## Extra Packages used
 
